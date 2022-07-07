@@ -26,4 +26,40 @@ export const deviceRouter = createRouter()
         },
       });
     },
+  })
+  .mutation('addDevice', {
+    input: z.object({
+      name: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      return await ctx.prisma.device.create({
+        data: {
+          name: input.name,
+          ownerID: ctx.session.uid,
+        },
+      });
+    },
+  })
+  .mutation('removeDevice', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const d = await ctx.prisma.device.findFirst({
+        where: {
+          ownerID: ctx.session.uid,
+          id: input.id,
+        },
+      });
+
+      if (!d) {
+        return {};
+      }
+
+      return await ctx.prisma.device.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    },
   });

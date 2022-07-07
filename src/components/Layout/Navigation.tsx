@@ -1,5 +1,6 @@
 import { Menu } from '@headlessui/react';
 import {
+  BellIcon,
   UserIcon,
   MapIcon,
   CollectionIcon,
@@ -25,6 +26,7 @@ export const Navigation = () => {
   const items = [
     { to: '/map', label: 'Home', icon: <MapIcon className={iconClassName} /> },
     { to: '/devices/manage', label: 'Devices', icon: <CollectionIcon className={iconClassName} /> },
+    { to: '/alerts/view', label: 'Devices', icon: <BellIcon className={iconClassName} /> },
   ].filter(Boolean) as NavigationItem[];
 
   return (

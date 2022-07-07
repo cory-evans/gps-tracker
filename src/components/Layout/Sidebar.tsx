@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
+import ActiveLink from '../Elements/ActiveLink';
 
 type SidebarProps = {
   title: string;
@@ -28,12 +29,14 @@ Sidebar.Entry = ({ children, ...props }: SidebarEntryProps) => {
 
 type SidebarNavLinkProps = {
   to: string;
-  children: React.ReactNode;
-};
-Sidebar.NavLink = ({ to, children }: SidebarNavLinkProps) => {
+} & React.ComponentProps<'li'>;
+
+Sidebar.NavLink = ({ to, children, ...props }: SidebarNavLinkProps) => {
   return (
-    <Link href={to} className={clsx('p-2 bg-primary-50')}>
-      <a>{children}</a>
-    </Link>
+    <li {...props}>
+      <ActiveLink href={to} activeClassName="bg-primary-100">
+        <a className="block p-2">{children}</a>
+      </ActiveLink>
+    </li>
   );
 };

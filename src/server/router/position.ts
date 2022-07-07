@@ -15,6 +15,9 @@ export const positionRouter = createRouter()
     async resolve({ ctx }) {
       return await ctx.prisma.position.findMany({
         distinct: ['deviceID'],
+        include: {
+          device: true,
+        },
         orderBy: [
           {
             createdAt: 'desc',

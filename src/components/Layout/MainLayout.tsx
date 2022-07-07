@@ -13,9 +13,9 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
           href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"
         />
       </Head>
-      <div className="min-h-screen flex">
+      <div className="h-screen flex overflow-hidden bg-gray-50">
         <Navigation />
-        <main className="flex flex-1">{children}</main>
+        <main className="z-0 flex-1 relative overflow-y-auto focus:outline-none">{children}</main>
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import { withAuth } from 'next-auth/middleware';
 export default withAuth({
   callbacks: {
     authorized: ({ token }) => {
-      console.log(token);
+      // console.log(token);
       if (token) {
         return true;
       }
@@ -14,5 +14,5 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: ['/map'],
+  matcher: ['/map', '/devices/:path*', '/alerts/:path*'],
 };

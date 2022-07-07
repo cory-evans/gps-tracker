@@ -7,6 +7,7 @@ import { Sidebar } from '../components/Layout/Sidebar';
 import { trpc } from '../utils/trpc';
 
 import { Map as LMap } from 'leaflet';
+import clsx from 'clsx';
 
 const Map: NextPage = () => {
   const devices = trpc.useQuery(['devices.getDevices']);
@@ -35,16 +36,22 @@ const Map: NextPage = () => {
         <title>Map</title>
       </Head>
       <MainLayout>
-        <Sidebar title="Map">
-          {devices.data?.map((device, index) => {
-            return (
-              <Sidebar.Entry key={index} onClick={() => deviceEntryClick(device.id)}>
-                {device.name}
-              </Sidebar.Entry>
-            );
-          })}
-        </Sidebar>
-        <MapWithNoSSR setMapRef={setMap} />
+        <div className="flex flex-1 h-full">
+          <Sidebar title="Map">
+            {devices.data?.map((device, index) => {
+              return (
+                <Sidebar.Entry
+                  key={index}
+                  onClick={() => deviceEntryClick(device.id)}
+                  className={clsx('p-2', 'cursor-pointer hover:bg-primary-100')}
+                >
+                  {device.name}
+                </Sidebar.Entry>
+              );
+            })}
+          </Sidebar>
+          <MapWithNoSSR setMapRef={setMap} />
+        </div>
       </MainLayout>
     </>
   );
