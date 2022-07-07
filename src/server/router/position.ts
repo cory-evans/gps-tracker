@@ -2,12 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { createRouter } from './context';
 import { z } from 'zod';
 
-export const deviceRouter = createRouter()
-  // .query("getSession", {
-  //   resolve({ ctx }) {
-  //     return ctx.session;
-  //   },
-  // })
+export const positionRouter = createRouter()
   .middleware(async ({ ctx, next }) => {
     // Any queries or mutations after this middleware will
     // raise an error unless there is a current session
@@ -16,12 +11,20 @@ export const deviceRouter = createRouter()
     }
     return next();
   })
-  .query('getDevices', {
+  .query('latest', {
     async resolve({ ctx }) {
-      return await ctx.prisma.device.findMany({
+      return await ctx.prisma.position.findMany({
+        distinct: ['deviceID'],
+        orderBy: [
+          {
+            createdAt: 'desc',
+          },
+        ],
         where: {
-          ownerID: {
-            equals: ctx.session.uid,
+          device: {
+            ownerID: {
+              equals: ctx.session.uid,
+            },
           },
         },
       });
