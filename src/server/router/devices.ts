@@ -18,6 +18,7 @@ export const deviceRouter = createRouter()
   })
   .query('getDevices', {
     async resolve({ ctx }) {
+      if (!ctx.session || !ctx.session.uid) return;
       return await ctx.prisma.device.findMany({
         where: {
           ownerID: {
@@ -32,6 +33,7 @@ export const deviceRouter = createRouter()
       name: z.string(),
     }),
     async resolve({ ctx, input }) {
+      if (!ctx.session || !ctx.session.uid) return;
       return await ctx.prisma.device.create({
         data: {
           name: input.name,
@@ -45,6 +47,7 @@ export const deviceRouter = createRouter()
       id: z.string(),
     }),
     async resolve({ ctx, input }) {
+      if (!ctx.session || !ctx.session.uid) return;
       const d = await ctx.prisma.device.findFirst({
         where: {
           ownerID: ctx.session.uid,

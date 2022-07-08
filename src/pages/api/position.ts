@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../server/db/client';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const position = async (req: NextApiRequest, res: NextApiResponse) => {
   const d = await prisma.device.findFirst();
 
   if (!d) {
@@ -22,3 +22,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   res.status(200).send(pos);
 };
+
+export default position;

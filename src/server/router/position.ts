@@ -13,6 +13,8 @@ export const positionRouter = createRouter()
   })
   .query('latest', {
     async resolve({ ctx }) {
+      if (!ctx.session || !ctx.session.uid) return;
+
       return await ctx.prisma.position.findMany({
         distinct: ['deviceID'],
         include: {

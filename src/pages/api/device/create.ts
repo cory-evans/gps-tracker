@@ -4,7 +4,7 @@ import { unstable_getServerSession } from 'next-auth';
 import { prisma } from '../../../server/db/client';
 import { authOptions as nextAuthOptions } from '../auth/[...nextauth]';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const createDevice = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await unstable_getServerSession(req, res, nextAuthOptions);
 
   if (!session) {
@@ -41,3 +41,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   res.send(d);
 };
+
+export default createDevice;
